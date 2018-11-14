@@ -1,0 +1,35 @@
+version: "2.0"
+
+services:
+    server:
+        image: intermediatica/laravel
+        ports:
+            - 80:80
+        volumes:
+            - ".:/var/www/app"
+        environment:
+            - APACHE_DOC_ROOT=/var/www/app/public
+        container_name: dentist
+
+    mysql:
+        image: mysql:latest
+        ports:
+            - 3306:3306
+        environment:
+            MYSQL_ROOT_PASSWORD: "root"
+            MYSQL_DATABASE: "dentist"
+            MYSQL_USER: "root"
+            MYSQL_PASSWORD: "root"
+        volumes:
+          - data_dentist:/var/lib/mysql
+        container_name: mysql_dentist
+
+    mailhog:
+        image: mailhog/mailhog
+        ports:
+            - 1025:1025
+            - 8025:8025
+        container_name: mail    
+
+volumes:
+    data_dentist:
